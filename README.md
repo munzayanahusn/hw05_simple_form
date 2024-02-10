@@ -17,10 +17,10 @@ Repositori ini berisi implementasi program untuk halaman registrasi. Halaman ter
 <img src="./img/registration.png" width="600">
 
 ### Notifikasi Sukses Menyimpan Data Pendaftar
-<img src="./img/success.png" width="400">
+<img src="./img/success.png" width="600">
 
 ### List Pendaftar
-<img src="./img/registrants.png" width="400">
+<img src="./img/registrants.png" width="600">
 
 ## Struktur Folder
 ```
