@@ -1,0 +1,177 @@
+<!--
+- Buatlah 1 buah halaman yang berisi form dan tabel. 
+- Form dan tabel terpisah menjadi 2 buah tab dengan nama tab Registrasi dan tab List Pendaftar. 
+
+- Form memiliki isian:
+    - Nama minimal 10 karakter
+    - Umur minimal 25 tahun
+    - Uang sangu minimal 100 ribu dan maksimal 1 juta
+
+- Setiap melakukan submit akan dicek berdasarkan kriteria tersebut, data tidak akan bisa tersimpan jika kriteria masih salah.
+- Pada tab List pendaftar akan berisi tabel yang berisi pendaftar dan resume dibawahnya, isi resume seperti berikut
+    - Rata rata pendaftar memiliki uang sangu sebesar [nilai rata rata uang sangu] dengan rata rata umur [nilai rata rata umur]
+
+
+Catatan :
+- Imajinasikan dan coba terapkan salah satu konsep OOP dan Asynchronous dalam menyelesaikan masalah tersebut
+- Push ke REPO dan upload link REPO, tolong repo dalam status public
+- Gunakan framework CSS untuk membuat tampilan lebih menarik
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Registrasi</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+        margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'Registrasi')">Registrasi</button>
+            <button class="tablinks" onclick="openTab(event, 'ListPendaftar')">List Pendaftar</button>
+        </div>
+
+        <div id="Registrasi" class="tabcontent">
+            <h3>Registrasi</h3>
+            <form id="registrationForm" onsubmit="return validateForm()">
+                <!--Nama minimal 10 karakter-->
+                <label for="nama">Nama</label>
+                <input type="text" id="nama" name="nama" required minlength="10">
+
+                <!--Umur minimal 25 tahun-->
+                <label for="umur">Umur</label>
+                <input type="number" id="umur" name="umur" required min="25">
+
+                <!--Uang sangu minimal 100 ribu dan maksimal 1 juta-->
+                <label for="uang">Uang Sangu</label>
+                <input type="number" id="uang" name="uang" required min="100000" max="1000000">
+
+                <input type="submit" value="Submit">
+            </form>
+        </div>    
+
+        <div id="ListPendaftar" class="tabcontent">
+            <h3>List Pendaftar</h3>
+            <table id="tablePendaftar">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Umur</th>
+                        <th>Uang Sangu</th>
+                    </tr>
+                </thead>
+                <tbody id="bodyPendaftar">
+                </tbody>
+            </table>
+            <p id="resumePendaftar"></p>
+    </div>
+
+    <script>
+        var pendaftar = []
+
+        function openTab(event, tab){
+            content = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < content.length; i++) {
+                content[i].style.display = "none";
+            }
+            links = document.getElementsByClassName("tablinks");
+            for (i = 0; i < links.length; i++) {
+                // Delete active css class
+                links[i].className = links[i].className.replace(" active", "");
+            }
+
+            document.getElementById(tab).style.display = "block";
+            event.currentTarget.className += " active";
+        }
+        
+        function validateForm(){
+            var nama = document.getElementById("nama").value;
+            var umur = document.getElementById("umur").value;
+            var uang = document.getElementById("uang").value;
+            
+            // Validasi nama minimum 10 karakter
+            if (nama.length < 10){
+                alert("Nama minimal 10 karakter");
+                return false;
+            }
+
+            // Validasi umur minimum 25 tahun
+            if (umur < 25){
+                alert("Umur minimal 25 tahun");
+                return false;
+            }
+
+            // Validasi uang sangu minimal 100 ribu dan maksimal 1 juta
+            if (uang < 100000 || uang > 1000000){
+                alert("Uang sangu minimal 100 ribu dan maksimal 1 juta");
+                return false;
+            }
+            
+            // Semua validasi terpenuhi, tambahkan data pada tabel dan perbarui resume
+            addData(nama, umur, uang);
+            calculateAverage();
+
+            document.getElementById("registrationForm").reset();
+            return false;
+        }
+
+        function updateTable() {
+            var table = document.getElementById("bodyPendaftar");
+            table.innerHTML = "";
+
+            // Loop melalui array pendaftar dan tambahkan setiap entri ke tabel
+            pendaftar.forEach(function(data) {
+                var row = table.insertRow();
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                cell1.innerHTML = data.nama;
+                cell2.innerHTML = data.umur;
+                cell3.innerHTML = data.uang;
+            });
+        }
+
+        function addData(nama, umur, uang){
+            pendaftar.push({ nama: nama, umur: umur, uang: uang });
+            console.log("Here " + pendaftar)
+
+            updateTable();
+
+            // var table = document.getElementById("tablePendaftar");
+            // var row = table.insertRow();
+            // var cell1 = row.insertCell(0);
+            // var cell2 = row.insertCell(1);
+            // var cell3 = row.insertCell(2);
+            // cell1.innerHTML = nama;
+            // cell2.innerHTML = umur;
+            // cell3.innerHTML = uang;
+        }
+
+        function calculateAverage(){
+            var table = document.getElementById("tablePendaftar");
+            var sumUang = 0;
+            var sumUmur = 0;
+            for (i = 1, row; row = table.rows[i]; i++) {
+                sumUang += parseInt(row.cells[2].innerHTML);
+                sumUmur += parseInt(row.cells[1].innerHTML);
+            }
+            var averageUang = sumUang / pendaftar.length;
+            var averageUmur = sumUmur / pendaftar.length;
+            document.getElementById("resumePendaftar").innerHTML = "Rata rata pendaftar memiliki uang sangu sebesar " + averageUang + " dengan rata rata umur " + averageUmur;
+        }
+
+        // Set default tab to Registrasi
+        document.getElementById("Registrasi").style.display = "block";
+        document.getElementsByClassName("tablinks")[0].className += " active";
+
+    </script>
+</body>
+
+</html>
