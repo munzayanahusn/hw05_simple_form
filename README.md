@@ -14,13 +14,13 @@ Repositori ini berisi implementasi program untuk halaman registrasi. Halaman ter
 ## Tampilan Halaman
 
 ### Registration Page
-<img src="./assets/doc/registration.png" width="600">
+<img src="./img/registration.png" width="600">
 
 ### Notifikasi Sukses Menyimpan Data Pendaftar
-<img src="./assets/doc/success.png" width="400">
+<img src="./img/success.png" width="400">
 
 ### List Pendaftar
-<img src="./assets/doc/registrants.png" width="400">
+<img src="./img/registrants.png" width="400">
 
 ## Struktur Folder
 ```
