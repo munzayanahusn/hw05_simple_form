@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Registrasi</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .container {
-            margin-top: 30px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
@@ -67,7 +63,7 @@
                 this.uangSangu = uangSangu;
             }
         }
-        
+
         const arrPendaftar = [];
         async function submitForm(event){
             event.preventDefault();
@@ -109,7 +105,7 @@
             });
             const averageUmur = sumUmur / arrPendaftar.length;
             const averageUang = sumUang / arrPendaftar.length;
-            resume.innerText = `Rata rata pendaftar memiliki uang sangu sebesar ${averageUang} dengan rata rata umur ${averageUmur.toFixed(2)}`;
+            resume.innerText = `Rata rata pendaftar memiliki uang sangu sebesar Rp.${averageUang} dengan rata rata umur ${averageUmur.toFixed(2)} tahun`;
         }
         document.getElementById("registrationForm").addEventListener("submit", submitForm);
     </script>
