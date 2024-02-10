@@ -19,6 +19,9 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="registration" role="tabpanel" aria-labelledby="registration-tab">
+                <div id="notification" class="alert alert-success" role="alert" style="display: none;">
+                    Data berhasil disimpan!
+                </div>
                 <form id="registrationForm">
                     <div class="form-group">
                         <label for="nama">Nama</label>
@@ -81,6 +84,12 @@
             document.getElementById("umur").value = "";
             document.getElementById("uangSangu").value = "";
             await updateTable();
+
+            // Get Notification
+            document.getElementById("notification").style.display = "block";
+            setTimeout(() => {
+                document.getElementById("notification").style.display = "none";
+            }, 3000);
         }
 
         async function updateTable(){
